@@ -1,4 +1,6 @@
 # Monad Execution
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ferk1ny%2Fmonad.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Ferk1ny%2Fmonad?ref=badge_shield)
+
 
 ## Overview
 
@@ -116,3 +118,7 @@ To understand how the source code is organized, you should start by reading
 the execution [developer overview](docs/overview.md), which explains how
 execution and consensus fit together, and where in the source tree you can
 find different pieces of functionality.
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ferk1ny%2Fmonad.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Ferk1ny%2Fmonad?ref=badge_large)
