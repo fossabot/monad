@@ -116,3 +116,29 @@ To understand how the source code is organized, you should start by reading
 the execution [developer overview](docs/overview.md), which explains how
 execution and consensus fit together, and where in the source tree you can
 find different pieces of functionality.
+
+## Metrics dashboard (docs)
+
+A lightweight static dashboard is available under `docs/` to visualize metrics from this app or any Prometheus/JSON endpoints.
+
+How to open locally:
+
+1. Serve the `docs/` directory to allow XHR to local files/URLs:
+
+   - Python: `python3 -m http.server -d docs 8080`
+   - Node: `npx http-server docs -p 8080 --no-cache`
+
+2. Open `http://localhost:8080/dashboard.html` in your browser.
+
+3. Add one or more sources:
+   - Paste a metrics URL (e.g., `http://localhost:9100/metrics`) and click “Add URL”.
+   - Or use the file picker to load local files (Prometheus text or JSON).
+
+4. Try the included samples in `docs/`:
+   - `metrics-sample.txt`
+   - `metrics-sample.json`
+
+Notes:
+- Prometheus text parsing supports `name{label="value"} number` lines; comments are ignored.
+- JSON parsing accepts arrays of `{ name, value, labels? }` or simple object maps.
+- Auto-refresh interval is configurable; use “Refresh Now” for manual fetch.

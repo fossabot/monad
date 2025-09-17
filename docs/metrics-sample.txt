@@ -1,0 +1,17 @@
+# HELP monad_requests_total Total number of requests processed by Monad
+# TYPE monad_requests_total counter
+monad_requests_total{endpoint="/health",method="GET",status="200"} 128
+monad_requests_total{endpoint="/metrics",method="GET",status="200"} 64
+monad_requests_total{endpoint="/compute",method="POST",status="200"} 42
+monad_requests_total{endpoint="/compute",method="POST",status="500"} 3
+
+# HELP monad_compute_seconds Time spent computing
+# TYPE monad_compute_seconds gauge
+monad_compute_seconds{stage="prepare"} 0.123
+monad_compute_seconds{stage="execute"} 1.456
+monad_compute_seconds{stage="finalize"} 0.321
+
+# HELP monad_queue_size Size of internal job queue
+# TYPE monad_queue_size gauge
+monad_queue_size 7
+

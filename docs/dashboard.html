@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Monad Metrics Dashboard</title>
+    <style>
+        :root { color-scheme: light dark; }
+        body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; margin: 16px; }
+        h1 { margin: 0 0 12px; font-size: 1.6rem; }
+        .toolbar { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: end; margin-bottom: 16px; }
+        .controls { display: grid; gap: 8px; }
+        .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+        input[type="text"], input[type="number"] { padding: 8px; border-radius: 6px; border: 1px solid #8884; min-width: 240px; }
+        button { padding: 8px 12px; border-radius: 6px; border: 1px solid #8884; background: #eee; cursor: pointer; }
+        button:hover { filter: brightness(0.98); }
+        .sources { display: flex; flex-wrap: wrap; gap: 6px; }
+        .chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 999px; border: 1px solid #8884; font-size: 0.9rem; }
+        .chip button { border: none; background: none; cursor: pointer; padding: 0 4px; }
+        .status { font-size: 0.9rem; opacity: 0.8; }
+        .grid { overflow: auto; border: 1px solid #8884; border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; }
+        thead { position: sticky; top: 0; background: color-mix(in oklab, Canvas 92%, CanvasText 0%); }
+        th, td { padding: 8px 10px; border-bottom: 1px solid #8882; text-align: left; white-space: nowrap; }
+        tbody tr:hover { background: #8881; }
+        .muted { opacity: 0.7; }
+        .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+        .help { font-size: 0.9rem; margin: 8px 0 16px; }
+        .spacer { flex: 1 1 auto; }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <h1>Monad Metrics Dashboard</h1>
+    <div class="help">
+        Add one or more metric sources (URLs or local files). Supports basic Prometheus text format and simple JSON.
+        For local preview with URL sources, you may need a static server (example: <span class="mono">python3 -m http.server -d docs 8080</span>).
+    </div>
+
+    <div class="toolbar">
+        <div class="controls">
+            <div class="row">
+                <input id="urlInput" type="text" placeholder="Add metrics URL (e.g. http://localhost:9100/metrics)">
+                <button id="addSourceBtn">Add URL</button>
+                <input id="fileInput" type="file" multiple>
+                <label class="row">
+                    <span>Refresh (s)</span>
+                    <input id="refreshInterval" type="number" min="2" step="1" value="10" style="width: 80px;">
+                </label>
+                <label class="row"><input id="autoRefresh" type="checkbox" checked> <span>Auto refresh</span></label>
+                <button id="refreshNowBtn">Refresh Now</button>
+                <span class="spacer"></span>
+            </div>
+            <div class="row">
+                <input id="filterInput" type="text" placeholder="Filter metrics by name...">
+                <span class="status" id="status"></span>
+            </div>
+            <div class="row">
+                <span class="muted">Quick samples:</span>
+                <button id="loadSampleTxt">Load sample Prometheus</button>
+                <button id="loadSampleJson">Load sample JSON</button>
+                <a class="muted" href="metrics-sample.txt" target="_blank" rel="noopener">metrics-sample.txt</a>
+                <a class="muted" href="metrics-sample.json" target="_blank" rel="noopener">metrics-sample.json</a>
+            </div>
+            <div class="sources" id="sources"></div>
+        </div>
+    </div>
+
+    <div class="grid">
+        <table id="metricsTable">
+            <thead>
+                <tr id="tableHead">
+                    <th>Metric</th>
+                    <th>Aggregate</th>
+                    <th class="muted">Details</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+
+    <script src="./dashboard.js"></script>
+</body>
+</html>
+

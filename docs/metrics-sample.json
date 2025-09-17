@@ -1,0 +1,7 @@
+[
+  { "name": "monad_workers", "value": 8 },
+  { "name": "monad_errors_total", "value": 5, "labels": { "type": "io" } },
+  { "name": "monad_cache_hits_total", "value": 1024 },
+  { "name": "monad_cache_misses_total", "value": 128 }
+]
+
